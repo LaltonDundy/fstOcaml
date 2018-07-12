@@ -1,5 +1,10 @@
 module Regular = struct
 
+(* 
+ * All possibilities of what our regular expressions could be. 
+ * Represented using ocaml's type system
+ *)
+
     type reg = Empty
         | Epsilon
         | All 
@@ -15,6 +20,9 @@ module Regular = struct
     let all   = All
     let toReg s = Str s
 
+    (*
+     * Union operator
+     *)
     let (<|>) r1 r2 = match (r1,r2) with
         | Empty , r -> r
         | r , Empty -> r
@@ -22,8 +30,14 @@ module Regular = struct
         | _   , Star All -> Star All
         | r1' , r2' -> Union (r1', r2')
 
+    (* 
+     * Concatenation operator
+     *)
     let (<>) r1 r2  = Concat (r1,r2)
 
+    (*
+     * Intersection operator
+     *)
     let (<&>) r1 r2 = match (r1, r2) with
         | Empty , _ -> Empty
         | _ , Empty -> Empty
@@ -31,12 +45,21 @@ module Regular = struct
         | a , Star All -> a
         | r1', r2' -> Intersect (r1', r2')
 
-    let star = function
-        | Star r -> Star r
+    (*
+     * Kleene star
+     *)
+    let rec star = function
+        | Star r -> star r
         | r      -> Star r
 
+    (*
+     * Plus Operator
+     *)
     let plus r = Concat ( r, (star r) )
 
+    (*
+     * Negation operator
+     *)
     let neg = function
         | Empty -> Star All
         | Epsilon -> plus All
@@ -45,7 +68,9 @@ module Regular = struct
         | a -> Complement a
 
 
-
+    (*
+     * Subtraction operator
+     *)
     let (<->) r1 r2 = match (r1, r2) with
         | Empty, _ -> Empty
         | a , Empty -> a
