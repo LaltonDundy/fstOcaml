@@ -1,19 +1,19 @@
 module Regular = struct
 
 (* 
- * All possibilities of what our regular expressions could be. 
+ * All possibilities of what our 'a regular expressions could be. 
  * Represented using ocaml's type system
  *)
 
-    type reg = Empty
+    type 'a reg = Empty
         | Epsilon
         | All 
-        | Str of string 
-        | Union of reg * reg
-        | Concat of reg * reg
-        | Intersect of reg * reg
-        | Complement of reg
-        | Star of reg
+        | Str of 'a 
+        | Union of 'a reg * 'a reg
+        | Concat of 'a reg * 'a reg
+        | Intersect of 'a reg * 'a reg
+        | Complement of 'a reg
+        | Star of 'a reg
 
     let empty = Empty
     let eps   = Epsilon

@@ -1,19 +1,19 @@
 module RRelations = struct
 
 (*
- * Module to create regular relations using ocaml's type system
+ * Module to create regular 'a relations using ocaml's type system
  *)
 
     open Regular
 
-    type rel = 
+    type 'a rel  = 
         | Cross of reg * reg
-        | Comp  of rel * rel
-        | Product  of rel * rel
-        | UnionRel  of rel * rel
-        | StarRel  of rel 
-        | Id  of rel * rel
-        | Relation of string * string 
+        | Comp  of 'a rel * 'a rel
+        | Product  of 'a rel * 'a rel
+        | UnionRel  of 'a rel * 'a rel
+        | StarRel  of 'a rel 
+        | Id  of 'a rel * 'a rel
+        | Relation of 'a * 'a 
         | EmptyRel
 
 
